@@ -388,7 +388,8 @@ public:
     pnh.param("open_position", max_position_, 0.115);
     pnh.param("max_effort", max_effort_, 100.0);
 
-    std::string action_name = "gripper_controller/gripper_action";
+    std::string action_name;
+    pnh.param<std::string>("action_name", action_name, "gripper_controller/gripper_action");
     client_.reset(new client_t(action_name, true));
     if (!client_->waitForServer(ros::Duration(2.0)))
     {
@@ -470,11 +471,12 @@ public:
     pnh.param("min_pos_tilt", min_pos_tilt_, -0.76);
     pnh.param("max_pos_tilt", max_pos_tilt_, 1.45);
 
-    // TODO: load topic from params
-    head_pan_joint_ = "head_pan_joint";
-    head_tilt_joint_ = "head_tilt_joint";
+    pnh.param<std::string>("pan_joint_name", head_pan_joint_, "head_pan_joint");
+    pnh.param<std::string>("tilt_joint_name", head_tilt_joint_, "head_tilt_joint");
 
-    std::string action_name = "head_controller/follow_joint_trajectory";
+    std::string action_name;
+    pnh.param<std::string>("action_name", action_name, "head_controller/follow_joint_trajectory");
+
     client_.reset(new client_t(action_name, true));
     if (!client_->waitForServer(ros::Duration(2.0)))
     {
@@ -731,8 +733,6 @@ public:
     nh.param("use_head", use_head, true);
     nh.param("use_arm", use_arm, true);
     nh.param("use_base", use_base, true);
-
-    // TODO: load these from YAML
 
     TeleopComponentPtr c;
     if (is_fetch)

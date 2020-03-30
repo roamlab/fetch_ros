@@ -1,0 +1,7 @@
+# Teleop components
+is_fetch: true
+use_torso: true
+use_gripper: true
+use_head: true
+use_arm: true
+use_base: true

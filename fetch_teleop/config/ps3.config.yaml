@@ -1,0 +1,94 @@
+# for a table of the mapping, see https://docs.fetchrobotics.com/teleop.html
+
+# Base Teleop
+base:
+  # Button mapping
+  button_deadman: 10 # L1
+  axis_x: 3 # Right Analog Stick - Vertical
+  axis_w: 0 # Left Analog Stick - Horizontal
+  # Base limits
+  max_vel_x: 1.0
+  min_vel_x: -0.5
+  max_vel_w: 3.0
+  max_acc_x: 1.0
+  max_acc_w: 3.0
+  # Maximum windup of acceleration ramping
+  max_windup_time: 0.25
+  # Mux for overriding navigation, etc.
+  use_mux: true
+
+# Follow Teleop
+follow:
+  # Button mapping
+  button_deadman: 10 # L1
+  button_increase: 12 # Triangle
+  button_decrease: 14 # X
+  # Joint limits
+  min_position: 0.0
+  max_position: 0.4
+  max_velocity: 0.075
+  max_accel: 0.25
+  # Should we inhibit lower priority components if running?
+  inhibit: false
+  # Load topic/joint info
+  joint_name: "torso_lift_joint"
+  action_name: "torso_controller/follow_joint_trajectory"
+
+# Gripper Teleop
+gripper:
+  # Button mapping
+  button_deadman: 10 # L1
+  button_open: 0 # Share
+  button_close: 3 # Options
+  # Joint limits
+  closed_position: 0.0
+  open_position: 0.115
+  max_effort: 100.0
+  # Load topic/joint info
+  action_name: "gripper_controller/gripper_action"
+
+# Head Teleop
+head:
+  # Button mapping
+  button_deadman: 8 # R2
+  axis_pan: 0 # Left Analog Stick - Horizontal
+  axis_tilt: 3 # Right Analog Stick - Vertical
+  # Joint limits
+  max_vel_pan: 1.5
+  max_vel_tilt: 1.5
+  max_acc_pan: 3.0
+  max_acc_tilt: 3.0
+  min_pos_pan: -1.57
+  max_pos_pan: 1.57
+  min_pos_tilt: -0.76
+  max_pos_tilt: 1.45
+  # Load topic/joint info
+  pan_joint_name: "head_pan_joint"
+  tilt_joint_name: "head_tilt_joint"
+  action_name: "head_controller/follow_joint_trajectory"
+
+# Arm Teleop
+arm:
+  # Button mapping
+  axis_x: 3 # Right Analog Stick - Vertical
+  axis_y: 2 # Right Analog Stick - Horizontal
+  axis_z: 1 # Left Analog Stick - Vertical
+  axis_roll: 2 # Right Analog Stick - Horizontal
+  axis_pitch: 3 # Right Analog Stick - Vertical
+  axis_yaw: 0 # Left Analog Stick - Horizontal
+  button_deadman: 10 # L1
+  button_arm_linear: 9 # R2
+  button_arm_angular: 11 # R1
+  # Twist limits
+  max_vel_x: 1.0
+  max_vel_y: 1.0
+  max_vel_z: 1.0
+  max_acc_x: 10.0
+  max_acc_y: 10.0
+  max_acc_z: 10.0
+  max_vel_roll: 2.0
+  max_vel_pitch: 2.0
+  max_vel_yaw: 2.0
+  max_acc_roll: 10.0
+  max_acc_pitch: 10.0
+  max_acc_yaw: 10.0
