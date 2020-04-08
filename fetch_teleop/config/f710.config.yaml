@@ -5,8 +5,8 @@
 base:
   # Button mapping
   button_deadman: 4 # Left Bumper
-  axis_x: 1 # Left Analog Stick - Horizontal
-  axis_w: 0 # Left Analog Stick - Vertical
+  axis_x: 1 # Left Analog Stick - Vertical
+  axis_w: 0 # Left Analog Stick - Horizontal
   # Base limits
   max_vel_x: 1.0
   min_vel_x: -0.5
@@ -21,7 +21,7 @@ base:
 # Follow Teleop
 torso:
   # Button mapping
-  button_deadman: 4 # Left Bumer
+  button_deadman: 4 # Left Bumper
   button_increase: 3 # Y
   button_decrease: 1 # A
   # Joint limits
@@ -51,7 +51,7 @@ gripper:
 # Head Teleop
 head:
   # Button mapping
-  button_deadman: 6 # Left Trigger
+  button_deadman: 5 # Right Bumper
   axis_pan: 0 # Left Analog Stick - Horizontal
   axis_tilt: 3 # Right Analog Stick - Vertical
   # Joint limits
@@ -78,8 +78,8 @@ arm:
   axis_pitch: 3 # Right Analog Stick - Vertical
   axis_yaw: 0 # Left Analog Stick - Horizontal
   button_deadman: 4 # Left Bumper
-  button_arm_linear: 7 # Right Trigger
-  button_arm_angular: 5 # Right Bumper
+  button_arm_linear: 10 # Left Analog Stick - Click
+  button_arm_angular: 11 # Right Analog Stick - Click
   # Twist limits
   max_vel_x: 1.0
   max_vel_y: 1.0
