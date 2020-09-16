@@ -15,6 +15,7 @@ find_package(catkin REQUIRED
     roscpp
     sensor_msgs
     topic_tools
+    nasa_hand_control
 )
 catkin_package()
 

@@ -47,6 +47,8 @@
 #include <sensor_msgs/Joy.h>
 #include <topic_tools/MuxSelect.h>
 
+#include <nasa_hand_control/HandCommands.h>
+
 double integrate(double desired, double present, double max_rate, double dt)
 {
   if (desired > present)
@@ -383,18 +385,25 @@ public:
     pnh.param("button_open", open_button_, 0);
     pnh.param("button_close", close_button_, 3);
 
-    // Joint Limits
-    pnh.param("closed_position", min_position_, 0.0);
-    pnh.param("open_position", max_position_, 0.115);
-    pnh.param("max_effort", max_effort_, 100.0);
+    // Initialize publisher for HandCommands
+    nasa_hand_pub_ = nh.advertise<nasa_hand_control::HandCommands>("/hand_commands", 1000);
 
-    std::string action_name;
-    pnh.param<std::string>("action_name", action_name, "gripper_controller/gripper_action");
-    client_.reset(new client_t(action_name, true));
-    if (!client_->waitForServer(ros::Duration(2.0)))
-    {
-      ROS_ERROR("%s may not be connected.", action_name.c_str());
-    }
+    // Populate hand command messages
+    open_hand_.commands = open_commands_;
+    close_hand_.commands = close_commands_;
+
+    // Joint Limits
+    // pnh.param("closed_position", min_position_, 0.0);
+    // pnh.param("open_position", max_position_, 0.115);
+    // pnh.param("max_effort", max_effort_, 100.0);
+
+    // std::string action_name;
+    // pnh.param<std::string>("action_name", action_name, "gripper_controller/gripper_action");
+    // client_.reset(new client_t(action_name, true));
+    // if (!client_->waitForServer(ros::Duration(2.0)))
+    // {
+    //   ROS_ERROR("%s may not be connected.", action_name.c_str());
+    // }
   }
 
   // This gets called whenever new joy message comes in
@@ -420,18 +429,26 @@ public:
   {
     if (req_open_)
     {
-      control_msgs::GripperCommandGoal goal;
-      goal.command.position = max_position_;
-      goal.command.max_effort = max_effort_;
-      client_->sendGoal(goal);
+      // control_msgs::GripperCommandGoal goal;
+      // goal.command.position = max_position_;
+      // goal.command.max_effort = max_effort_;
+      // client_->sendGoal(goal);
+
+      // open hand
+      nasa_hand_pub_.publish(open_hand_);
+
       req_open_ = false;
     }
     else if (req_close_)
     {
-      control_msgs::GripperCommandGoal goal;
-      goal.command.position = min_position_;
-      goal.command.max_effort = max_effort_;
-      client_->sendGoal(goal);
+      // control_msgs::GripperCommandGoal goal;
+      // goal.command.position = min_position_;
+      // goal.command.max_effort = max_effort_;
+      // client_->sendGoal(goal);
+
+      // close hand
+      nasa_hand_pub_.publish(close_hand_);
+
       req_close_ = false;
     }
   }
@@ -441,6 +458,14 @@ private:
   double min_position_, max_position_, max_effort_;
   bool req_close_, req_open_;
   boost::shared_ptr<client_t> client_;
+
+  ros::Publisher nasa_hand_pub_;
+
+  nasa_hand_control::HandCommands open_hand_;
+  nasa_hand_control::HandCommands close_hand_;
+
+  std::vector<double> open_commands_ = {0,1,1,-1.57,-1,1,-1,1};
+  std::vector<double> close_commands_ = {0,-1,-1,-1.57,1,-1,1,-1};
 };
 
 

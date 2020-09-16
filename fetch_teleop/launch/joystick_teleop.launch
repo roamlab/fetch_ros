@@ -1,5 +1,5 @@
 <launch>
-  <arg name="gamepad" default="ps3" />
+  <arg name="gamepad" default="f710" />
   <arg name="config_filepath" default="$(find fetch_teleop)/config/$(arg gamepad).config.yaml" />
   <arg name="dev" default="/dev/input/js0" />
 
